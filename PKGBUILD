@@ -20,10 +20,13 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-# Maintainer: Truocolo <truocolo@aol.com>
-# Maintainer: Truocolo <truocolo@0x6E5163fC4BFc1511Dbe06bB605cc14a3e462332b>
-# Maintainer: Pellegrino Prevete (dvorak) <pellegrinoprevete@gmail.com>
-# Maintainer: Pellegrino Prevete (dvorak) <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
+# Maintainers:
+#   Truocolo
+#     <truocolo@aol.com>
+#     <truocolo@0x6E5163fC4BFc1511Dbe06bB605cc14a3e462332b>
+#   Pellegrino Prevete (dvorak)
+#     <pellegrinoprevete@gmail.com>
+#     <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
 
 _os="$( \
   uname \
@@ -40,15 +43,45 @@ if [[ ! -v "_evmfs" ]]; then
     _evmfs="false"
   fi
 fi
-_offline="false"
-_git="false"
+if [[ ! -v "_offline" ]]; then
+  _offine="true"
+fi
+if [[ ! -v "_git" ]]; then
+  _git="false"
+fi
+if [[ ! -v "_git_http" ]]; then
+  _git_http="gitlab"
+fi
+if [[ ! -v "_archive_format" ]]; then
+  _archive_format="tar.gz"
+  if [[ "${_git_http}" == "github" ]]; then
+    _archive_format="zip"
+  fi
+fi
+if [[ ! -v "_git_http" ]]; then
+  _git_http="gitlab"
+fi
+if [[ ! -v "_docs" ]]; then
+  _docs="true"
+fi
+_py="python"
 _pkg=evm-gnupg
-pkgname="${_pkg}"
+pkgbase="${_pkg}"
+pkgname=(
+  "${_pkg}"
+)
+if [[ "${_docs}" == "true" ]]; then
+  pkgname+=(
+    "${_pkg}-docs"
+  )
+fi
 pkgver="0.0.0.0.0.0.0.0.0.1.1"
 _commit="59f9d7446525970fe672bcd4833d8051592da10e"
 pkgrel=1
 _pkgdesc=(
-  "GNUPG wrapper to create an EVM-compatible GPG key."
+  "GNUPG wrapper to manage"
+  "Ethereum Virtual Machine"
+  "(EVM) compatible GPG keys."
 )
 pkgdesc="${_pkgdesc[*]}"
 arch=(
@@ -72,6 +105,11 @@ optdepends+=(
 makedepends=(
   'make'
 )
+if [[ "${_docs}" == "true" ]]; then
+  makedepends+=(
+    "${_py}-docutils"
+  )
+fi
 checkdepends=(
   "shellcheck"
 )
@@ -79,29 +117,30 @@ _url="${url}"
 _tag="${_commit}"
 _tag_name="commit"
 _tarname="${pkgname}-${_tag}"
+_tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
   _url="file://${HOME}/${pkgname}"
 fi
+_sum="23151985d27fc88ed09e7111c0496b2c6abe27d644e65b7c6d5a91b5edfa35cb"
+_sig_sum="156f762c7f4dbe31e5e061adae4cd90e04c05d448e5faf1189fbf815675f2859"
 _evmfs_network="100"
 _evmfs_address="0x69470b18f8b8b5f92b48f6199dcb147b4be96571"
 _evmfs_ns="0x87003Bd6C074C713783df04f36517451fF34CBEf"
-_archive_sum="23151985d27fc88ed09e7111c0496b2c6abe27d644e65b7c6d5a91b5edfa35cb"
-_evmfs_archive_uri="evmfs://${_evmfs_network}/${_evmfs_address}/${_evmfs_ns}/${_archive_sum}"
-_evmfs_archive_src="${_tarname}.zip::${_evmfs_archive_uri}"
-_archive_sig_sum="156f762c7f4dbe31e5e061adae4cd90e04c05d448e5faf1189fbf815675f2859"
-_archive_sig_uri="evmfs://${_evmfs_network}/${_evmfs_address}/${_evmfs_ns}/${_archive_sig_sum}"
-_archive_sig_src="${_tarname}.zip.sig::${_archive_sig_uri}"
+_evmfs_dir="evmfs://${_evmfs_network}/${_evmfs_address}/${_evmfs_ns}"
+_evmfs_uri="${_evmfs_dir}/${_sum}"
+_evmfs_src="${_tarfile}::${_evmfs_uri}"
+_sig_uri="${_evmfs_dir}/${_sig_sum}"
+_sig_src="${_tarfile}.sig::${_sig_uri}"
 if [[ "${_evmfs}" == "true" ]]; then
   makedepends+=(
     "evmfs"
   )
-  _src="${_evmfs_archive_src}"
-  _sum="${_archive_sum}"
+  _src="${_evmfs_src}"
   source+=(
-    "${_archive_sig_src}"
+    "${_sig_src}"
   )
   sha256sums+=(
-    "${_archive_sig_sum}"
+    "${_sig_sum}"
   )
 elif [[ "${_git}" == true ]]; then
   makedepends+=(
@@ -111,12 +150,12 @@ elif [[ "${_git}" == true ]]; then
   _sum="SKIP"
 elif [[ "${_git}" == false ]]; then
   if [[ "${_tag_name}" == 'pkgver' ]]; then
-    _src="${_tarname}.tar.gz::${_url}/archive/refs/tags/${_tag}.tar.gz"
+    _uri="${_url}/archive/refs/tags/${_tag}.${_archive_format}"
     _sum="d4f4179c6e4ce1702c5fe6af132669e8ec4d0378428f69518f2926b969663a91"
   elif [[ "${_tag_name}" == "commit" ]]; then
-    _src="${_tarname}.zip::${_url}/archive/${_commit}.zip"
-    _sum="${_archive_sum}"
+    _uri="${_url}/archive/${_commit}.${_archive_format}"
   fi
+  _src="${_tarfile}::${_uri}"
 fi
 source=(
   "${_src}"
@@ -129,7 +168,8 @@ validpgpkeys=(
   # Truocolo <truocolo@aol.com>
   '97E989E6CF1D2C7F7A41FF9F95684DBE23D6A3E9'
   'DD6732B02E6C88E9E27E2E0D5FC6652B9D9A6C01'
-  # Pellegrino Prevete (dvorak) <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
+  # Pellegrino Prevete (dvorak)
+  #   <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
   '12D8E3D7888F741E89F86EE0FEC8567A644F1D16'
 )
 
@@ -141,18 +181,47 @@ check() {
     check
 }
 
-package() {
+package_evm-gnupg() {
   local \
     _make_opts=()
   _make_opts=(
-    PREFIX="/usr"
     DESTDIR="${pkgdir}"
+    PREFIX='/usr'
   )
   cd \
     "${_tarname}"
   make \
     "${_make_opts[@]}" \
-    install
+    install-scripts
+  install \
+    -vDm644 \
+    "${srcdir}/COPYING" \
+    -t \
+    "${pkgdir}/usr/share/licenses/${pkgname}/"
+}
+
+package_evm-gnupg-docs() {
+  local \
+    _make_opts=()
+  depends=()
+  optdepends=(
+    "${_evm_gnupg_docs_ref_optdepends[*]}"
+  )
+  _make_opts=(
+    DESTDIR="${pkgdir}"
+    PREFIX='/usr'
+  )
+  cd \
+    "${_tarname}"
+  make \
+    "${_make_opts[@]}" \
+    install-doc \
+    install-man
+  install \
+    -vDm644 \
+    "${srcdir}/COPYING" \
+    -t \
+    "${pkgdir}/usr/share/licenses/${pkgname}/"
 }
 
 # vim: ft=sh syn=sh et
