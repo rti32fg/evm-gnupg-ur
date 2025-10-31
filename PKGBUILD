@@ -76,6 +76,7 @@ if [[ "${_docs}" == "true" ]]; then
   )
 fi
 pkgver="0.0.0.0.0.0.0.0.0.1.1"
+_crash_bash_pkgver="0.0.0.0.0.1.1.1.1"
 _commit="59f9d7446525970fe672bcd4833d8051592da10e"
 pkgrel=1
 _pkgdesc=(
@@ -97,7 +98,7 @@ depends=(
   "evm-wallet"
   "evm-openpgp-keyserver"
   "gnupg"
-  "libcrash-bash"
+  "libcrash-bash>=${_crash_bash_pkgver}"
 )
 optdepends=()
 optdepends+=(
