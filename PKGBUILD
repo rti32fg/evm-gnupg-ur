@@ -233,7 +233,7 @@ package_evm-gnupg-docs() {
     install-man
   install \
     -vDm644 \
-    "${srcdir}/COPYING" \
+    "${srcdir}/${_tarname}/COPYING" \
     -t \
     "${pkgdir}/usr/share/licenses/${pkgname}/"
 }
