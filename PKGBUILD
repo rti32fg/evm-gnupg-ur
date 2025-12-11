@@ -100,8 +100,20 @@ depends=(
   "gnupg"
   "libcrash-bash>=${_crash_bash_pkgver}"
 )
-optdepends=()
-optdepends+=(
+_evm_gnupg_docs_optdepends=(
+  "${_pkg}-docs:"
+    "Ethereum Virtual Machine"
+    "GNU Privacy Guard (EVM GnuPG)"
+    "documentation"
+    "and manuals."
+)
+_evm_gnupg_docs_ref_optdepends+=(
+ "${_pkg}:"
+   "The package this documentation"
+   "package pertains to."
+)
+optdepends=(
+  "${_evm_gnupg_docs_optdepends[*]}"
 )
 makedepends=(
   'make'
