@@ -75,9 +75,9 @@ if [[ "${_docs}" == "true" ]]; then
     "${_pkg}-docs"
   )
 fi
-pkgver="0.0.0.0.0.0.0.0.1.1"
+pkgver="0.0.0.0.0.0.0.0.1.1.1"
 _crash_bash_pkgver="0.0.0.0.0.1.1.1.1"
-_commit="a14b8d918d5d2ccc3e81ca5d52efc56a21ad4eb0"
+_commit="8bb4f049a529fba438face89be71b210fad3d005"
 pkgrel=2
 _pkgdesc=(
   "GNUPG wrapper to manage"
@@ -134,8 +134,8 @@ _tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
   _url="file://${HOME}/${_pkg}"
 fi
-_sum="9839011e4bb3dbbd437f65bdf94b9ffd108f186d1b9afddd3265ff47b5fb00ee"
-_sig_sum="fc6f317f939d985fea1ad5c19b181e38fa992d76ba2514317db0a9a166004ff9"
+_sum="1fa3a5c5e0bad487229f5517fd6152a6fa4bbd4c167cefb77f10929c7c92ca94"
+_sig_sum="f6fe7120b760d406aab73da55b198c2ae326c41e9ceb05294a6eb0ea5bb6b113"
 _evmfs_network="100"
 _evmfs_address="0x69470b18f8b8b5f92b48f6199dcb147b4be96571"
 # Dvorak
