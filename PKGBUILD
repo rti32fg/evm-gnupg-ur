@@ -78,7 +78,7 @@ fi
 pkgver="0.0.0.0.0.0.0.0.1.1.1"
 _crash_bash_pkgver="0.0.0.0.0.1.1.1.1"
 _commit="8bb4f049a529fba438face89be71b210fad3d005"
-pkgrel=2
+pkgrel=1
 _pkgdesc=(
   "GNUPG wrapper to manage"
   "Ethereum Virtual Machine"
