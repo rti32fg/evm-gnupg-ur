@@ -75,10 +75,10 @@ if [[ "${_docs}" == "true" ]]; then
     "${_pkg}-docs"
   )
 fi
-pkgver="0.0.0.0.0.0.0.0.1.1.1"
+pkgver="0.0.0.0.0.0.0.0.1.1.1.1.1"
 _crash_bash_pkgver="0.0.0.0.0.1.1.1.1"
 _evm_wallet_pkgver="0.0.0.0.0.0.0.0.0.0.1.1.1"
-_commit="8bb4f049a529fba438face89be71b210fad3d005"
+_commit="9f8b58bbf59d209950d180220381dbcd5c6dbc52"
 pkgrel=1
 _pkgdesc=(
   "GNUPG wrapper to manage"

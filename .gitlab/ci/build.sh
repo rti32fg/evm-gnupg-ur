@@ -219,8 +219,18 @@ _build() {
   _makepkg_opts+=(
     -df
     --nocheck
-    --skipinteg
   )
+  if [[ "${ns}" != "themartiancompany" ]]; then
+    _evmfs="$( \
+      recipe-get \
+        "/home/user/${_pkgname}/PKGBUILD" \
+        "_evmfs")"
+    if [[ "${_evmfs}" == "false" ]]; then
+      _makepkg_opts+=(
+        --skipinteg
+      )
+    fi
+  fi
   pacman \
     -S \
     --noconfirm \
