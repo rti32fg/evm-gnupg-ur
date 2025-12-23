@@ -135,8 +135,8 @@ _tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
   _url="file://${HOME}/${_pkg}"
 fi
-_sum="1fa3a5c5e0bad487229f5517fd6152a6fa4bbd4c167cefb77f10929c7c92ca94"
-_sig_sum="f6fe7120b760d406aab73da55b198c2ae326c41e9ceb05294a6eb0ea5bb6b113"
+_sum="b3f6121602239cb3672a5602446b3c95d221b79094ece74f9dedcd58b480556c"
+_sig_sum="9341c830cf52375a38f5f076ed98e13bf1c309d0dd7903f15722abeff1011b24"
 _evmfs_network="100"
 _evmfs_address="0x69470b18f8b8b5f92b48f6199dcb147b4be96571"
 # Dvorak
