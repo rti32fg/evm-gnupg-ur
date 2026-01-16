@@ -19,7 +19,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 # Maintainers:
 #   Truocolo
 #     <truocolo@aol.com>
@@ -28,10 +27,10 @@
 #     <pellegrinoprevete@gmail.com>
 #     <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
 
-_os="$( \
+_os="$(
   uname \
     -o)"
-_evmfs_available="$( \
+_evmfs_available="$(
   command \
     -v \
     "evmfs" || \
@@ -80,7 +79,7 @@ _crash_bash_pkgver="0.0.0.0.0.1.1.1.1"
 _evm_wallet_pkgver="0.0.0.0.0.0.0.0.0.0.1.1.1"
 _evm_openpgp_keyserver_pkgver="0.0.0.0.0.0.0.0.0.0.1"
 _commit="92bbe0543214192b209bc5e9c24fb11d4a04755e"
-pkgrel=3
+pkgrel=4
 _pkgdesc=(
   "GNUPG wrapper to manage"
   "Ethereum Virtual Machine"
